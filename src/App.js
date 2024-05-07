@@ -4,7 +4,9 @@ import BasketGame from './BasketGame'
 import Cargame from './Cargame'
 import Home from './Home'
 import './App.css';
-
+import Signin from './SignIn';
+import Signup from './SignUp';
+import Main from './Main.js';
 
 function App() {
   //create browser router object
@@ -14,7 +16,11 @@ function App() {
       element:<RootLayout/>,
       children:[{
           path:"/",
-          element:<Home/>
+          element:<Signin/>
+      },
+      {  path:"/home",
+         element:<Home/>
+
       },
       {
         path:"/basketgame",
@@ -23,7 +29,19 @@ function App() {
     {
       path:"/cargame",
       element:<Cargame/>
-  }
+    },
+    {
+      path:"/signup",
+      element:<Signup/>
+    },
+    {
+      path:"/signin",
+      element:<Signin/>
+    },
+    {
+      path:"/main",
+      element:<Main/>
+    }
     ]
     }
   ])
