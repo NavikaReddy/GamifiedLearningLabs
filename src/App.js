@@ -4,8 +4,8 @@ import BasketGame from './BasketGame'
 import Cargame from './Cargame'
 import Home from './Home'
 import './App.css';
-import Signin from './Components/SignIn/SignIn.js';
-import Signup from './Components/SignUp/SignUp.js';
+import Signin from './SignIn';
+import Signup from './SignUp';
 import Main from './Main.js';
 
 function App() {
