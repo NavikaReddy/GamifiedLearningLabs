@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link component
-import './Home.css';
+import './DSA.css';
 
-function Home() {
+function DSA() {
   return (
 
    
@@ -35,4 +35,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default DSA;

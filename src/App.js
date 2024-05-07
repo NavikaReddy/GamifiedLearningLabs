@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './RootLayout';
-import BasketGame from './BasketGame'
-import Cargame from './Cargame'
-import Home from './Home'
+import BasketGame from './BasketGame.js'
+import Cargame from './Cargame.js'
+import Home from './Components/DSA/DSA'
 import './App.css';
-import Signin from './SignIn';
-import Signup from './SignUp';
+import Signin from './Components/SignIn/SignIn';
+import Signup from './Components/SignUp/SignUp';
 import Main from './Main.js';
 
 function App() {

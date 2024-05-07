@@ -1,5 +1,4 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
-import "./App.css";
 function Cargame() {
   const { unityProvider, isLoaded } = useUnityContext({
     loaderUrl:
