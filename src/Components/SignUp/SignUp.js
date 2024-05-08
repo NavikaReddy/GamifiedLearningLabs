@@ -88,7 +88,7 @@ function Signup() {
         Already have an account? <Link to="/signin">Sign in</Link>
       </p>
     </div>
-  );
+  )
 }
-
 export default Signup;
+
