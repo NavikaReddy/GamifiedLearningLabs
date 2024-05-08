@@ -1,5 +1,4 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
-import "./App.css";
 function BasketGame() {
   const { unityProvider, isLoaded } = useUnityContext({
     loaderUrl:

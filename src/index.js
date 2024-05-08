@@ -7,6 +7,8 @@ import reportWebVitals from './reportWebVitals';
 import Cargame from './Cargame';
 import App from './App';
 import BasketGame from './BasketGame';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
