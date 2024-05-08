@@ -34,7 +34,7 @@ function Signup() {
   return (
     <div className='signup'>
       <h2>Sign Up</h2>
-      {err && <p style={{ color: 'white' }}>{err}</p>}
+      {err && <p style={{ color: 'red' }}>{err}</p>}
       <form onSubmit={handleSubmit(addNewUser)} className='signup-form'>
         <div className='items'>
           <label>Username:</label>

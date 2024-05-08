@@ -6,7 +6,7 @@ import Home from './Components/DSA/DSA'
 import './App.css';
 import Signin from './Components/SignIn/SignIn';
 import Signup from './Components/SignUp/SignUp';
-import Main from './Main.js';
+import Main from './Components/Main/Main.js';
 
 function App() {
   //create browser router object

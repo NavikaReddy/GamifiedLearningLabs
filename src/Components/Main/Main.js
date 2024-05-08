@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Main.css'; // Import your CSS file for Main component
 
 function Main() {
   const [userData, setUserData] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    // Fetch user data from the database
-    // Example API call
-    fetchUserData()
-      .then(data => setUserData(data))
-      .catch(error => console.error('Error fetching user data:', error));
-  }, []);
-
-  const fetchUserData = async () => {
-    // Example API endpoint for fetching user data
-    const response = await fetch('/api/userData');
-    const data = await response.json();
-    return data;
-  };
+    // Fetch user data from the location state passed from Signin component
+    if (location.state && location.state.userData) {
+      setUserData(location.state.userData);
+    } else {
+      // Handle case where user data is not available in location state
+    }
+  }, [location.state]);
 
   const handleCourseChange = (event) => {
     const selectedCourse = event.target.value;
@@ -51,13 +46,13 @@ function Main() {
     <div>
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/">Sign Out</Link></li>
           <li><Link to="/courses">Courses</Link></li>
           {/* Add more navigation links as needed */}
         </ul>
       </nav>
       <div className="user-details">
-        <h2>Welcome, {userData ? userData.name : 'User'}!</h2>
+        <h2>Welcome {userData ? userData.username : 'User'}!</h2>
         <p>Scores: {userData ? userData.scores : 'N/A'}</p>
         <p>Points: {userData ? userData.points : 'N/A'}</p>
       </div>
@@ -71,8 +66,6 @@ function Main() {
           {/* Add more options as needed */}
         </select>
       </div>
-      
-      
     </div>
   );
 }

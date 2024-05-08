@@ -27,6 +27,7 @@ nav {
   /* User details styles */
   .user-details {
     margin-bottom: 20px;
+    color: #ccc;
   }
   
   .user-details h2 {

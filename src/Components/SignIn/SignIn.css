@@ -3,11 +3,11 @@ body{
     background-color:#1d1531;
 } 
 .signin-container {
-    max-width: 400px;
-    margin: 200px;
-    padding: 20px;
+    max-width: 200px;
+    margin: 100px;
+    padding: 10px;
     text-align:left;
-    justify-content: left;
+    justify-content:center;
     align-items: left;
   }
   
@@ -58,5 +58,6 @@ body{
   
   p {
     margin-top: 20px;
+    color: #ccc;
   }
   
