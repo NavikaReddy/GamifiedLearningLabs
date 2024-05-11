@@ -31,7 +31,7 @@ function Signin() {
     <div className='signin'>
       <h2>Sign In</h2>
       {err && <p style={{ color: 'red' }}>{err}</p>}
-      <form onSubmit={handleSubmit(handleLogin)} className='signin-form'>
+      <form onSubmit={handleSubmit(handleLogin)} className='signin-form' >
         <div>
           <label>Username:</label>
           <input
