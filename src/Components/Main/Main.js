@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation ,Outlet} from 'react-router-dom';
 import './Main.css'; // Import your CSS file for Main component
 
 function Main() {
@@ -44,28 +44,35 @@ function Main() {
 
   return (
     <div>
-      <nav>
-        <ul>
-          <li><Link to="/">Sign Out</Link></li>
-          <li><Link to="/courses">Courses</Link></li>
-          {/* Add more navigation links as needed */}
-        </ul>
-      </nav>
-      <div className="user-details">
-        <h2>Welcome {userData ? userData.username : 'User'}!</h2>
-        <p>Scores: {userData ? userData.scores : 'N/A'}</p>
-        <p>Points: {userData ? userData.points : 'N/A'}</p>
-      </div>
-      <div className="search-bar">
-        <h3>Search Courses</h3>
-        <select value={selectedCourse} onChange={handleCourseChange}>
-          <option value="">Select a course</option>
-          <option value="DSA">DSA</option>
-          <option value="OOPs">OOPs</option>
-          <option value="OS">OS</option>
-          {/* Add more options as needed */}
-        </select>
-      </div>
+      <ul className="nav justify-content-center">
+        <li className="nav-item">
+          <Link className="nav-link" to="/">SignOut</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="leaderboard">LeaderBoard</Link>
+        </li>
+      </ul>
+      {/* Conditionally render user details and search bar based on the route */}
+      {location.pathname !== '/main/leaderboard' && (
+        <div>
+          <div className="user-details">
+            <h2>Welcome {userData ? userData.username : 'User'}!</h2>
+            <p>Scores: {userData ? userData.dijkstraScore + userData.dsaTestScore : '-'}</p>
+            <p>Points: {userData ? userData.points : '-'}</p>
+          </div>
+          <div className="search-bar">
+            <h3>Search Courses</h3>
+            <select value={selectedCourse} onChange={handleCourseChange}>
+              <option value="">Select a course</option>
+              <option value="DSA">DSA</option>
+              <option value="OOPs">OOPs</option>
+              <option value="OS">OS</option>
+              {/* Add more options as needed */}
+            </select>
+          </div>
+        </div>
+      )}
+      <Outlet/>
     </div>
   );
 }

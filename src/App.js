@@ -7,6 +7,7 @@ import './App.css';
 import Signin from './Components/SignIn/SignIn';
 import Signup from './Components/SignUp/SignUp';
 import Main from './Components/Main/Main.js';
+import LeaderBoard from './Components/LeaderBoard/LeaderBoard.js';
 
 function App() {
   //create browser router object
@@ -40,7 +41,13 @@ function App() {
     },
     {
       path:"/main",
-      element:<Main/>
+      element:<Main/>,
+      children:[
+        {
+          path:"leaderboard",
+          element:<LeaderBoard/>
+        }
+      ]
     }
     ]
     }

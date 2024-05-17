@@ -1,7 +1,16 @@
 const exp = require("express");
 const userApp = exp.Router();
 const bcryptjs = require('bcryptjs');
-
+const expressAsyncHandler = require('express-async-handler');
+const session = require('express-session');
+userApp.use(session({
+  secret: 'abcdef', // Change this to a secure random key
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // Expiry time in milliseconds (1 day in this example)
+  }
+}));
 userApp.use(exp.json());
 //signup
 userApp.post("/register", async (request, response) => {
@@ -17,7 +26,8 @@ userApp.post("/register", async (request, response) => {
       // Hash password
       const hashedPassword = await bcryptjs.hash(newUser.password, 10);
       newUser.password = hashedPassword;
-
+      newUser.dijkstraScore=0;
+      newUser.dsaTestScore=0;
       // Insert new user
       await usersCollection.insertOne(newUser);
       response.status(201).send({ message: "User created" });
@@ -51,13 +61,33 @@ userApp.post("/signin", async (request, response) => {
       return;
     }
 
-    // If user exists and password is correct, redirect to home page or send success response
-    response.status(200).send({ message: "Sign in successful", user });
+    // Initialize session object if it doesn't exist
+    if (!request.session) {
+      request.session = {};
+    }
+
+    // Initialize user object in session if it doesn't exist
+    if (!request.session.user) {
+      request.session.user = {};
+    }
+
+    // Assign user data to session object properties
+    request.session.user.id = user._id;
+    request.session.user.username = user.username;
+    request.session.user.email = user.email;
+    request.session.user.dijkstraScore = user.dijkstraScore;
+    request.session.user.dsaTestScore = user.dsaTestScore;
+    console.log(request.session.user)
+    // If user exists and password is correct, send success response with user data
+    response.status(200).send({ message: "Sign in successful", user: request.session.user });
   } catch (err) {
     console.error("Error in user sign-in:", err);
     response.status(500).send({ message: "Internal server error" });
   }
 });
+
+
+
 
 //get the user
 userApp.get("/user/:userId", async (request, response) => {
@@ -77,6 +107,57 @@ userApp.get("/user/:userId", async (request, response) => {
     response.status(200).send({ username: user.username });
   } catch (err) {
     console.error("Error fetching user data:", err);
+    response.status(500).send({ message: "Internal server error" });
+  }
+});
+
+userApp.get("/get-users", expressAsyncHandler(async (request, response) => {
+  // Get users collection object
+  const usersCollection = request.app.get("usersCollection");
+
+  try {
+    // Get users from the database with specified fields, calculate total score, and sort by total score
+    let usersList = await usersCollection.find(
+      {}, // Empty filter to get all users
+      { projection: { _id: 1, username: 1, email: 1, dijkstraScore: 1, dsaTestScore: 1, totalScore: { $sum: ["$dijkstraScore", "$dsaTestScore"] } } } // Projection to include specified fields and totalScore
+    ).toArray(); // Fetch all users
+
+    // Sort users list based on totalScore field in descending order
+    usersList.sort((a, b) => b.totalScore - a.totalScore);
+
+    // Send a successful response with status 200 and the sorted user list
+    response.status(200).send(usersList);
+  } catch (error) {
+    // If an error occurs, send an error response with status 500 and the error message
+    response.status(500).send({ message: "Error fetching users", error });
+  }
+}));
+
+
+userApp.post("/updateDScore", async (request, response) => {
+  const usersCollection = request.app.get("usersCollection");
+  const { dijkstraScore } = request.body;
+
+  console.log("Request Body:", request.body); // Add this line to log the request body
+
+  try {
+    const user = request.session.user;
+    console.log("Session User:", user); // Log the session user
+    console.log("Dijkstra Score:", dijkstraScore); // Log the incoming dijkstraScore
+
+    if (parseInt(dijkstraScore) > user.dijkstraScore) {
+      const filter = { username: user.username };
+      const update = { $set: { dijkstraScore: dijkstraScore } };
+      // Mark the handler function as async to use await
+      await usersCollection.updateOne(filter, update);
+      // Update session user data
+      request.session.user.dijkstraScore = dijkstraScore;
+      response.status(200).send({ message: "Score updated" });
+    } else {
+      response.status(200).send({ message: "No update needed" });
+    }
+  } catch (err) {
+    console.error("Error updating score:", err);
     response.status(500).send({ message: "Internal server error" });
   }
 });

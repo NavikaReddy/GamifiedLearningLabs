@@ -1,0 +1,32 @@
+/* Table styles */
+.table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-weight: 500;
+  }
+  
+  .table tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+  }
+  
+  .table tbody tr:nth-of-type(even) {
+    background-color: #e9ecef;
+  }
+  
+ 
