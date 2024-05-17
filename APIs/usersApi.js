@@ -112,18 +112,30 @@ userApp.get("/user/:userId", async (request, response) => {
 });
 
 userApp.get("/get-users", expressAsyncHandler(async (request, response) => {
-  // Get users collection object
   const usersCollection = request.app.get("usersCollection");
 
   try {
-    // Get users from the database with specified fields, calculate total score, and sort by total score
-    let usersList = await usersCollection.find(
-      {}, // Empty filter to get all users
-      { projection: { _id: 1, username: 1, email: 1, dijkstraScore: 1, dsaTestScore: 1, totalScore: { $sum: ["$dijkstraScore", "$dsaTestScore"] } } } // Projection to include specified fields and totalScore
-    ).toArray(); // Fetch all users
-
-    // Sort users list based on totalScore field in descending order
-    usersList.sort((a, b) => b.totalScore - a.totalScore);
+    // Use MongoDB's aggregation framework to compute totalScore and sort by totalScore in descending order
+    let usersList = await usersCollection.aggregate([
+      {
+        $project: {
+          _id: 1,
+          username: 1,
+          email: 1,
+          dijkstraScore: 1,
+          dsaTestScore: 1,
+          totalScore: {
+            $add: [
+              { $toInt: "$dijkstraScore" },
+              { $toInt: "$dsaTestScore" }
+            ]
+          }
+        }
+      },
+      {
+        $sort: { totalScore: -1 }
+      }
+    ]).toArray();
 
     // Send a successful response with status 200 and the sorted user list
     response.status(200).send(usersList);
@@ -132,6 +144,7 @@ userApp.get("/get-users", expressAsyncHandler(async (request, response) => {
     response.status(500).send({ message: "Error fetching users", error });
   }
 }));
+
 
 
 userApp.post("/updateDScore", async (request, response) => {
