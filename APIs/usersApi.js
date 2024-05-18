@@ -149,22 +149,27 @@ userApp.get("/get-users", expressAsyncHandler(async (request, response) => {
 
 userApp.post("/updateDScore", async (request, response) => {
   const usersCollection = request.app.get("usersCollection");
-  const { dijkstraScore } = request.body;
+  const scoreEntry = request.body;
 
-  console.log("Request Body:", request.body); // Add this line to log the request body
+  console.log("Request Body:", scoreEntry); // Log the request body
 
   try {
     const user = request.session.user;
     console.log("Session User:", user); // Log the session user
-    console.log("Dijkstra Score:", dijkstraScore); // Log the incoming dijkstraScore
 
-    if (parseInt(dijkstraScore) > user.dijkstraScore) {
+    // Extract the single key-value pair from the request body
+    const [scoreType, newScore] = Object.entries(scoreEntry)[0];
+    console.log(`${scoreType}:`, newScore); // Log the score type and new score
+
+    const currentScore = user[scoreType];
+
+    if (parseInt(newScore) > parseInt(currentScore)) {
       const filter = { username: user.username };
-      const update = { $set: { dijkstraScore: dijkstraScore } };
-      // Mark the handler function as async to use await
+      const update = { $set: { [scoreType]: newScore } };
+      
       await usersCollection.updateOne(filter, update);
       // Update session user data
-      request.session.user.dijkstraScore = dijkstraScore;
+      request.session.user[scoreType] = newScore;
       response.status(200).send({ message: "Score updated" });
     } else {
       response.status(200).send({ message: "No update needed" });

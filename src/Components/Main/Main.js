@@ -57,7 +57,7 @@ function Main() {
         <div>
           <div className="user-details">
             <h2>Welcome {userData ? userData.username : 'User'}!</h2>
-            <p>Scores: {userData ? userData.dijkstraScore + userData.dsaTestScore : '-'}</p>
+            <p>Scores: {userData ? parseInt(userData.dijkstraScore) + parseInt(userData.dsaTestScore) : '-'}</p>
             <p>Points: {userData ? userData.points : '-'}</p>
           </div>
           <div className="search-bar">
