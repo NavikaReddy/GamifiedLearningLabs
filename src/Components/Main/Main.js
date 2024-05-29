@@ -24,6 +24,10 @@ function Main() {
     if (selectedCourse === 'DSA') {
       navigate('/home');
     }
+    if(selectedCourse==='Tests')
+      {
+        navigate('/tests');
+      }
     // Add additional conditions to redirect to other components based on selected course
   };
 
@@ -57,7 +61,7 @@ function Main() {
         <div>
           <div className="user-details">
             <h2>Welcome {userData ? userData.username : 'User'}!</h2>
-            <p>Scores: {userData ? parseInt(userData.dijkstraScore) + parseInt(userData.dsaTestScore) : '-'}</p>
+            <p>Scores: {userData ? parseInt(userData.dijkstraScore) + parseInt(userData.dsaTestScore) + parseInt(userData.binarySearchScore) : '-'}</p>
             <p>Points: {userData ? userData.points : '-'}</p>
           </div>
           <div className="search-bar">
@@ -65,8 +69,7 @@ function Main() {
             <select value={selectedCourse} onChange={handleCourseChange}>
               <option value="">Select a course</option>
               <option value="DSA">DSA</option>
-              <option value="OOPs">OOPs</option>
-              <option value="OS">OS</option>
+              <option value="Tests">Tests</option>
               {/* Add more options as needed */}
             </select>
           </div>

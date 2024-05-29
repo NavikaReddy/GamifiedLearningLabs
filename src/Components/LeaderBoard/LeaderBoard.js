@@ -40,6 +40,7 @@ function LeaderBoard() {
               <th scope='col'>Email</th>
               <th scope='col'>Total Score</th>
               <th scope='col'>Dijkstra</th>
+              <th scope='col'>Binary Search</th>
               <th scope='col'>DSA Test</th>
             </tr>
           </thead>
@@ -48,8 +49,9 @@ function LeaderBoard() {
               <tr key={userObj.id}>
                 <td>{userObj.username}</td>
                 <td>{userObj.email}</td>
-                <td>{parseInt(userObj.dijkstraScore) + parseInt(userObj.dsaTestScore)}</td>
+                <td>{parseInt(userObj.dijkstraScore) + parseInt(userObj.dsaTestScore)+parseInt(userObj.binarySearchScore)}</td>
                 <td>{userObj.dijkstraScore}</td>
+                <td>{userObj.binarySearchScore}</td>
                 <td>{userObj.dsaTestScore}</td>
               </tr>
             ))}

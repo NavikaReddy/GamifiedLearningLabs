@@ -28,6 +28,7 @@ userApp.post("/register", async (request, response) => {
       newUser.password = hashedPassword;
       newUser.dijkstraScore=0;
       newUser.dsaTestScore=0;
+      newUser.binarySearchScore=0;
       // Insert new user
       await usersCollection.insertOne(newUser);
       response.status(201).send({ message: "User created" });
@@ -77,6 +78,7 @@ userApp.post("/signin", async (request, response) => {
     request.session.user.email = user.email;
     request.session.user.dijkstraScore = user.dijkstraScore;
     request.session.user.dsaTestScore = user.dsaTestScore;
+    request.session.user.binarySearchScore=user.binarySearchScore;
     console.log(request.session.user)
     // If user exists and password is correct, send success response with user data
     response.status(200).send({ message: "Sign in successful", user: request.session.user });
@@ -124,10 +126,12 @@ userApp.get("/get-users", expressAsyncHandler(async (request, response) => {
           email: 1,
           dijkstraScore: 1,
           dsaTestScore: 1,
+          binarySearchScore:1,
           totalScore: {
             $add: [
               { $toInt: "$dijkstraScore" },
-              { $toInt: "$dsaTestScore" }
+              { $toInt: "$dsaTestScore" },
+              {$toInt:"$binarySearchScore"}
             ]
           }
         }

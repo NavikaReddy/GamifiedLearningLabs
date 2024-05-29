@@ -19,11 +19,12 @@ function DSA() {
           <button>Play Now!</button>
         </Link>
       </div>
+
       <div className="game-card">
-        <img src="https://images.playground.com/3b9d508b13bc40b093b13b32897c0c64.jpeg" alt="Game 2" />
-        <h3>DSA Baskets</h3>
-        <p>To Catch or To Not?</p>
-        <Link to="/basketgame">
+        <img src="https://img.freepik.com/premium-photo/hd-8k-wallpaper-stock-photographic_1064748-41419.jpg" alt="Game 2" />
+        <h3>Binary Search Game</h3>
+        <p>Find it or Not?</p>
+        <Link to="/binarygame">
           <button>Play Now!</button>
         </Link>
       </div>

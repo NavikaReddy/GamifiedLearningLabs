@@ -1,8 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './RootLayout';
 import BasketGame from './BasketGame.js'
+import BinarySearchGame from './BinarySearchGame.js'
 import Cargame from './Cargame.js'
 import Home from './Components/DSA/DSA'
+import Tests from './Components/Tests/Tests'
 import './App.css';
 import Signin from './Components/SignIn/SignIn';
 import Signup from './Components/SignUp/SignUp';
@@ -24,8 +26,16 @@ function App() {
 
       },
       {
+        path:"/tests",
+        element:<Tests/>
+      },
+      {
         path:"/basketgame",
         element:<BasketGame/>
+    },
+    {
+      path:"/binarygame",
+      element:<BinarySearchGame/>
     },
     {
       path:"/cargame",
