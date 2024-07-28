@@ -26,7 +26,7 @@ function LeaderBoard() {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  });
 
   return (
     <div>
