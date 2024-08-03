@@ -10,6 +10,8 @@ import Signin from './Components/SignIn/SignIn';
 import Signup from './Components/SignUp/SignUp';
 import Main from './Components/Main/Main.js';
 import LeaderBoard from './Components/LeaderBoard/LeaderBoard.js';
+import Postfix from './Components/Postfix/Postfix.js';
+import CodeCompiler from './Components/CodeCompiler/CodeCompiler.js'
 
 function App() {
   //create browser router object
@@ -20,6 +22,14 @@ function App() {
       children:[{
           path:"/",
           element:<Signin/>
+      },
+      {
+        path:"/postfixeval",
+        element:<Postfix/>
+      },
+      {
+        path:"/code",
+        element:<CodeCompiler />
       },
       {  path:"/home",
          element:<Home/>

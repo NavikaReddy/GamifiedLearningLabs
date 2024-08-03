@@ -18,6 +18,9 @@ function DSA() {
         <Link to="/cargame">
           <button>Play Now!</button>
         </Link>
+        <Link to="/code">
+          <button className='ms-3'>Build Algo</button>
+        </Link>
       </div>
 
       <div className="game-card">
@@ -26,6 +29,20 @@ function DSA() {
         <p>Find it or Not?</p>
         <Link to="/binarygame">
           <button>Play Now!</button>
+        </Link>
+        <Link to="/code">
+          <button className='ms-3'>Build Algo</button>
+        </Link>
+      </div>
+      <div className="game-card">
+        <img src="https://www.ebuyer.com/blog/wp-content/uploads/2014/07/buttons-on-a-calculator-header1.jpg" alt="Game 2" />
+        <h3>Calculator - backend Visualization </h3>
+        <p>Lets calculate!</p>
+        <Link to="/postfixeval">
+          <button>View Now!</button>
+        </Link>
+        <Link to="/code">
+          <button className='ms-3'>Build Algo</button>
         </Link>
       </div>
     </div>

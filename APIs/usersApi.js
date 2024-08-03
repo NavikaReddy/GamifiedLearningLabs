@@ -11,6 +11,7 @@ userApp.use(session({
     maxAge: 24 * 60 * 60 * 1000, // Expiry time in milliseconds (1 day in this example)
   }
 }));
+userApp.use(exp.urlencoded({extended:true}));
 userApp.use(exp.json());
 //signup
 userApp.post("/register", async (request, response) => {
@@ -183,8 +184,6 @@ userApp.post("/updateDScore", async (request, response) => {
     response.status(500).send({ message: "Internal server error" });
   }
 });
-
-
 
 
 module.exports = userApp;

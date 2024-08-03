@@ -4,6 +4,7 @@ const port = 3500;
 
 // Import routes
 const usersApi = require("./APIs/usersApi");
+const compileApi=require('./APIs/compileApi')
 
 const path = require("path")
 app.use(exp.static(path.join(__dirname,'./build')))
@@ -17,7 +18,9 @@ client.connect()
   .then(() => {
     const db = client.db("gamiLearnDb");
     const usersCollection = db.collection("users");
+    const compilerCollection = db.collection("compiler");
     app.set('usersCollection', usersCollection);
+    app.set('compilerColleection',compilerCollection);
     console.log("DB Connection Success");
 
     // Start server after DB connection
@@ -29,5 +32,6 @@ client.connect()
 
 // Routes
 app.use('/user-api', usersApi);
+app.use('/code',compileApi)
 
 module.exports = app;
