@@ -39,9 +39,13 @@ function LeaderBoard() {
               <th scope='col'>Username</th>
               <th scope='col'>Email</th>
               <th scope='col'>Total Score</th>
-              <th scope='col'>Dijkstra</th>
-              <th scope='col'>Binary Search</th>
-              <th scope='col'>DSA Test</th>
+              <th scope='col'>Dijkstra Game</th>
+              <th scope='col'>Binary Search Game</th>
+              <th scope='col'>Dijkstra Algorithm</th>
+              <th scope='col'>Binary Search Algorithm</th>
+              <th scope='col'>Postfix Evaluation Algorithm</th>
+              <th scope='col'>DSA Quiz 1</th>
+              <th scope='col'>DSA Quiz 2</th>
             </tr>
           </thead>
           <tbody>
@@ -52,7 +56,11 @@ function LeaderBoard() {
                 <td>{parseInt(userObj.dijkstraScore) + parseInt(userObj.dsaTestScore)+parseInt(userObj.binarySearchScore)}</td>
                 <td>{userObj.dijkstraScore}</td>
                 <td>{userObj.binarySearchScore}</td>
+                <td>{userObj.dijkstraCode}</td>
+                <td>{userObj.binarySearchCode}</td>
+                <td>{userObj.postfixCode}</td>
                 <td>{userObj.dsaTestScore}</td>
+                <td>{userObj.dsaQuizScore}</td>
               </tr>
             ))}
           </tbody>

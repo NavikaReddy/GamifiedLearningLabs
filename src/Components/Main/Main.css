@@ -1,85 +1,62 @@
 /* Navbar styles */
 nav {
-    background-color:rgba(33, 34, 51, 0.9);
-    color: #fff;
-    padding: 10px 0;
-    justify-content:flex-end;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    margin: 0;
-    justify-content: end;
-    padding: 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin-right: 10px;
-    justify-content: end;
-  }
-  
-  nav ul li a {
-    color: #8a3eed;
-    text-decoration: none;
-  }
-  
-  /* User details styles */
-  .user-details {
-    margin-bottom: 20px;
-    color: #ccc;
-  }
-  
-  .user-details h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .user-details p {
-    font-size:24px;
-    margin: 5px 0;
-  }
-  
-  /* Search bar styles */
-  .search-bar {
-    margin-bottom: 20px;
-    justify-content: normal;
-    color:#8C52FF;
-    padding: 30px;
-    border-radius: 5 px;
-    
-  }
-  
-  .search-bar h3 {
-    font-size: 20px;
-    
-    margin-bottom: 10px;
-  }
-  
-  /* Recommended courses styles */
-  .recommended-courses {
-    margin-bottom: 20px;
-  }
-  
-  .recommended-courses h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  /* Card styles for recommended courses */
-  .card {
+  background-color: rgba(33, 34, 51, 0.9);
+  color: #fff;
+  padding: 10px 0;
+  justify-content: flex-end;
+}
 
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  justify-content: end;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+  justify-content: end;
+}
+
+nav ul li a {
+  color: #8a3eed;
+  text-decoration: none;
+}
+
+/* User details styles */
+.user-details {
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.user-details h2 {
+  color: #8a3eed;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+/* Chart container styles */
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.chart-item {
+  margin: 10px;
+}
+
+/* Ensure graphs are shown in 2 per row */
+@media (max-width: 768px) {
+  .chart-container {
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .card h4 {
-    margin-bottom: 5px;
+
+  .chart-item {
+      margin: 10px 0;
   }
-  
-  .card p {
-    margin: 5px 0;
-  }
-  
+}

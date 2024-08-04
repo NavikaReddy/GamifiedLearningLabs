@@ -17,6 +17,14 @@ function Tests() {
           <button>Play Now!</button>
         </Link>
       </div>
+      <div className="game-card">
+        <img src="https://images.playground.com/3b9d508b13bc40b093b13b32897c0c64.jpeg" alt="Game 1" />
+        <h3>DSA Quiz😎</h3>
+        <p>Brain Teaser Triumph</p>
+        <Link to="/dsaQuiz">
+          <button>Play Now!</button>
+        </Link>
+      </div>
     </div>
     <Link to="/main">
           <button className='Back'>Back to All Courses</button>

@@ -29,7 +29,12 @@ userApp.post("/register", async (request, response) => {
       newUser.password = hashedPassword;
       newUser.dijkstraScore=0;
       newUser.dsaTestScore=0;
+      newUser.dsaQuizScore=0;
       newUser.binarySearchScore=0;
+      newUser.dijkstraCode=0;
+      newUser.binarySearchCode=0;
+      newUser.postfixCode=0;
+      newUser.login=[];
       // Insert new user
       await usersCollection.insertOne(newUser);
       response.status(201).send({ message: "User created" });
@@ -73,13 +78,27 @@ userApp.post("/signin", async (request, response) => {
       request.session.user = {};
     }
 
+    // Append the current timestamp to the login array
+    const currentTimestamp = new Date();
+    await usersCollection.updateOne(
+      { username },
+      { $push: { login: currentTimestamp } }
+    );
+    const user1 = await usersCollection.findOne({ username });
     // Assign user data to session object properties
-    request.session.user.id = user._id;
-    request.session.user.username = user.username;
-    request.session.user.email = user.email;
-    request.session.user.dijkstraScore = user.dijkstraScore;
-    request.session.user.dsaTestScore = user.dsaTestScore;
-    request.session.user.binarySearchScore=user.binarySearchScore;
+    request.session.user.id = user1._id;
+    request.session.user.username = user1.username;
+    request.session.user.email = user1.email;
+    request.session.user.dijkstraScore = user1.dijkstraScore;
+    request.session.user.dsaTestScore = user1.dsaTestScore;
+    request.session.user.binarySearchScore=user1.binarySearchScore;
+    request.session.user.dijkstraCode = user1.dijkstraCode;
+    request.session.user.binarySearchCode = user1.binarySearchCode;
+    request.session.user.postfixCode = user1.postfixCode;
+    request.session.user.dsaQuizScore=user1.dsaQuizScore;
+    request.session.user.login=user1.login;
+    
+
     console.log(request.session.user)
     // If user exists and password is correct, send success response with user data
     response.status(200).send({ message: "Sign in successful", user: request.session.user });
@@ -126,13 +145,21 @@ userApp.get("/get-users", expressAsyncHandler(async (request, response) => {
           username: 1,
           email: 1,
           dijkstraScore: 1,
-          dsaTestScore: 1,
           binarySearchScore:1,
+          dijkstraCode:1,
+          binarySearchCode:1,
+          postfixCode:1,
+          dsaTestScore:1,
+          dsaQuizScore:1,
           totalScore: {
             $add: [
               { $toInt: "$dijkstraScore" },
+              {$toInt:"$binarySearchScore"},
+              { $toInt: "$dijkstraCode" },
+              {$toInt:"$binarySearchCode"},
+              {$toInt:"$postfixCode"},
               { $toInt: "$dsaTestScore" },
-              {$toInt:"$binarySearchScore"}
+              { $toInt: "$dsaQuizScore" },
             ]
           }
         }

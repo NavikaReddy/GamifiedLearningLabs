@@ -1,0 +1,43 @@
+.problem-statement-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.problem-statement-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.problem-statement-container h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.problem-statement-container p,
+.problem-statement-container ul,
+.problem-statement-container pre {
+    margin-bottom: 20px;
+}
+
+.problem-statement-container pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.navigate-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navigate-button:hover {
+    background-color: #0056b3;
+}

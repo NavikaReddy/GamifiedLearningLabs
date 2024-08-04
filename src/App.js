@@ -12,6 +12,11 @@ import Main from './Components/Main/Main.js';
 import LeaderBoard from './Components/LeaderBoard/LeaderBoard.js';
 import Postfix from './Components/Postfix/Postfix.js';
 import CodeCompiler from './Components/CodeCompiler/CodeCompiler.js'
+import DijkstraPS from './Components/DijkstraPS/DijkstraPS.js';
+import Status from './Components/Status/Status.js';
+import BSPS from './Components/BSPS/BSPS.js'
+import PostfixPS from './Components/PostfixPS/PostfixPS.js'
+import DSAQuiz from './DSAQuiz.js';
 
 function App() {
   //create browser router object
@@ -40,6 +45,22 @@ function App() {
         element:<Tests/>
       },
       {
+        path:"/status",
+        element:<Status/>
+      },
+      {
+        path:"/dijps",
+        element:<DijkstraPS/>
+      },
+      {
+        path:"/binps",
+        element:<BSPS/>
+      },
+      {
+        path:"/posps",
+        element:<PostfixPS/>
+      },
+      {
         path:"/basketgame",
         element:<BasketGame/>
     },
@@ -50,6 +71,10 @@ function App() {
     {
       path:"/cargame",
       element:<Cargame/>
+    },
+    {
+      path:"/dsaQuiz",
+      element:<DSAQuiz/>
     },
     {
       path:"/signup",

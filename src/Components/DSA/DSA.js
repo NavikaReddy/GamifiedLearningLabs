@@ -18,7 +18,7 @@ function DSA() {
         <Link to="/cargame">
           <button>Play Now!</button>
         </Link>
-        <Link to="/code">
+        <Link to="/dijps">
           <button className='ms-3'>Build Algo</button>
         </Link>
       </div>
@@ -30,7 +30,7 @@ function DSA() {
         <Link to="/binarygame">
           <button>Play Now!</button>
         </Link>
-        <Link to="/code">
+        <Link to="/binps">
           <button className='ms-3'>Build Algo</button>
         </Link>
       </div>
@@ -41,7 +41,7 @@ function DSA() {
         <Link to="/postfixeval">
           <button>View Now!</button>
         </Link>
-        <Link to="/code">
+        <Link to="/posps">
           <button className='ms-3'>Build Algo</button>
         </Link>
       </div>
