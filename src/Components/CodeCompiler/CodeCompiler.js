@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import './CodeCompiler.css';
 import Editor from "@monaco-editor/react";
 import Navbar from './Navbar/Navbar';
 import Axios from 'axios';
 import spinner from './spinner.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { CODE_SNIPPETS } from './CodeSnippets'; 
 
 // Utility function to create a delay
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -37,6 +38,7 @@ function CodeCompiler() {
         { input: '3\n0 1 4\n1 0 2\n4 2 0\n1', expectedOutput: '1 0 2', description: 'Test Case 9' },
         { input: '6\n0 3 6 1 9 4\n3 0 2 5 8 7\n6 2 0 6 7 3\n1 5 6 0 4 2\n9 8 7 4 0 9\n4 7 3 2 9 0\n0', expectedOutput: '0 3 5 1 5 3', description: 'Test Case 10' }
     ];
+    
 
     const hiddenTestCasesBIN = [
         {
@@ -144,7 +146,10 @@ function CodeCompiler() {
         }
       ];
 
-
+    useEffect(() => {
+        // Load the sample code when the language changes
+        setUserCode(CODE_SNIPPETS[userLang] || '');
+    }, [userLang]);
 
     function compile() {
         setLoading(true);
@@ -247,8 +252,7 @@ function CodeCompiler() {
                         width="80%"
                         theme={userTheme}
                         language={userLang}
-                        defaultLanguage="python"
-                        defaultValue="# Enter your code here"
+                        value={userCode} // Use value instead of defaultValue
                         onChange={(value) => { setUserCode(value) }}
                     />
                     <div className="button-container">
