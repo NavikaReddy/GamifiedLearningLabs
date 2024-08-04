@@ -244,7 +244,7 @@ function CodeCompiler() {
                     <Editor
                         options={options}
                         height="calc(100vh - 50px)"
-                        width="100%"
+                        width="80%"
                         theme={userTheme}
                         language={userLang}
                         defaultLanguage="python"
@@ -275,9 +275,11 @@ function CodeCompiler() {
                     ) : (
                         <div className="output-box">
                             <pre>{userOutput}</pre>
+                           
                             <button onClick={() => { clearOutput() }} className="clear-btn">
                                 Clear
                             </button>
+                           
                         </div>
                     )}
                 </div>
