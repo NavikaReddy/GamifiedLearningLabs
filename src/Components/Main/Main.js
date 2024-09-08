@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ScatterChart, Scatter } from 'recharts';
-import axios from 'axios'; // Make sure you have axios installed
-import './Main.css'; // Import your CSS file for Main component
+import { Tooltip, XAxis, YAxis, CartesianGrid, Cell, PieChart, Pie, BarChart, Bar, Legend } from 'recharts';
+import axios from 'axios';
+import CalendarHeatmap from 'react-calendar-heatmap';  // Import the heatmap
+import 'react-calendar-heatmap/dist/styles.css';  // Import heatmap styles
+import './Main.css';
 
 function Main() {
   const [userData, setUserData] = useState(null);
@@ -11,22 +13,20 @@ function Main() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Fetch user data from location state
   useEffect(() => {
-    // Fetch user data from the location state passed from Signin component
     if (location.state && location.state.userData) {
       setUserData(location.state.userData);
     }
   }, [location.state]);
 
+  // Fetch top users for the leaderboard
   useEffect(() => {
-    // Fetch top users data from the API
     const fetchTopUsers = async () => {
       try {
         const response = await axios.get('http://localhost:3500/user-api/get-users');
         const users = response.data;
-
-        // Limit to top 3 users
-        setTopUsers(users.slice(0, 3));
+        setTopUsers(users.slice(0, 3)); // Limit to top 3 users
       } catch (error) {
         console.error("Error fetching top users:", error);
       }
@@ -35,19 +35,27 @@ function Main() {
     fetchTopUsers();
   }, []);
 
+  // Handle course selection change
   const handleCourseChange = (event) => {
     const selectedCourse = event.target.value;
     setSelectedCourse(selectedCourse);
-    // Redirect to the home page when the "DSA" option is selected
-    if (selectedCourse === 'DSA') {
-      navigate('/home');
-    }
-    if (selectedCourse === 'Tests') {
-      navigate('/tests');
-    }
+    if (selectedCourse === 'DSA') navigate('/home');
+    if (selectedCourse === 'Tests') navigate('/tests');
   };
 
-  // Prepare data for charts
+  // Define color scheme for the heatmap
+  const COLORS = ['#0e4429', '#006d32', '#27a641', '#3ad353'];
+
+  // Determine heatmap color based on login count
+  const getColor = (count) => {
+    if (count === 0) return '#161b22'; // No logins
+    if (count <= 5) return COLORS[0];
+    if (count <= 10) return COLORS[1];
+    if (count <= 20) return COLORS[2];
+    return COLORS[3];
+  };
+
+  // Calculate total score from user data
   const totalScore = userData ? 
     parseInt(userData.dijkstraScore) +
     parseInt(userData.dsaTestScore) +
@@ -57,25 +65,25 @@ function Main() {
     parseInt(userData.postfixCode) +
     parseInt(userData.dsaQuizScore) : 0;
 
+  // Prepare data for the pie chart (scores by section)
   const scoresBySection = [
     { name: 'Learning Games', value: userData ? parseInt(userData.dijkstraScore) + parseInt(userData.binarySearchScore) : 0 },
     { name: 'Code Modules', value: userData ? parseInt(userData.dijkstraCode) + parseInt(userData.binarySearchCode) + parseInt(userData.postfixCode): 0 },
     { name: 'Quizzes', value: userData ? parseInt(userData.dsaQuizScore) + parseInt(userData.dsaTestScore) : 0 },
   ];
 
+  // Prepare data for the pie chart (scores by algorithm)
   const scoresByAlgorithm = [
     { name: 'Dijkstra', value: userData ? parseInt(userData.dijkstraScore) + parseInt(userData.dijkstraCode) : 0 },
     { name: 'Binary Search', value: userData ? parseInt(userData.binarySearchScore) + parseInt(userData.binarySearchCode) : 0 },
     { name: 'Postfix', value: userData ? parseInt(userData.postfixCode) : 0 },
   ];
 
-  // Convert login timestamps to date counts for heatmap
+  // Convert login timestamps to date counts for the heatmap
   const getDateCounts = (loginDates) => {
     const dateCountMap = {};
     
-    // Ensure each loginDate is a Date object
     loginDates.forEach(date => {
-      // If date is a string, convert it to a Date object
       const dateObj = typeof date === 'string' ? new Date(date) : date;
       
       if (dateObj instanceof Date && !isNaN(dateObj)) {
@@ -95,6 +103,7 @@ function Main() {
 
   return (
     <div>
+      {/* Navigation bar */}
       <ul className="nav justify-content-center">
         <li className="nav-item">
           <Link className="nav-link" to="/">SignOut</Link>
@@ -103,7 +112,8 @@ function Main() {
           <Link className="nav-link" to="leaderboard">LeaderBoard</Link>
         </li>
       </ul>
-      {/* Conditionally render user details and search bar based on the route */}
+
+      {/* User details */}
       {location.pathname !== '/main/leaderboard' && (
         <div>
           <div className="user-details">
@@ -121,8 +131,7 @@ function Main() {
         </div>
       )}
 
-
-      {/* Pie Chart for Percentage of Marks in Various Sections */}
+      {/* Pie charts for scores by section and algorithm */}
       <div className="chart-container">
         <div className="chart-item">
           <h2>Percentage of Marks by Section</h2>
@@ -132,11 +141,13 @@ function Main() {
               dataKey="value"
               nameKey="name"
               outerRadius={120}
-              fill="#8884d8"
               label
             >
               {scoresBySection.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={index === 0 ? '#82ca9d' : '#8884d8'} />
+                <Cell key={`cell-${index}`} fill={
+                  index === 0 ? '#82ca9d' : 
+                  index === 1 ? '#8884d8' : 
+                  '#ffc658'} />
               ))}
             </Pie>
             <Tooltip />
@@ -144,7 +155,6 @@ function Main() {
           </PieChart>
         </div>
 
-        {/* Donut Chart for Percentage of Marks in Various Algorithms */}
         <div className="chart-item">
           <h2>Percentage of Marks by Algorithm</h2>
           <PieChart width={300} height={300}>
@@ -154,11 +164,13 @@ function Main() {
               nameKey="name"
               innerRadius={80}
               outerRadius={120}
-              fill="#8884d8"
               label
             >
               {scoresByAlgorithm.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={index === 0 ? '#82ca9d' : '#8884d8'} />
+                <Cell key={`cell-${index}`} fill={
+                  index === 0 ? '#82ca9d' : 
+                  index === 1 ? '#8884d8' : 
+                  '#ffc658'} />
               ))}
             </Pie>
             <Tooltip />
@@ -166,32 +178,50 @@ function Main() {
           </PieChart>
         </div>
       </div>
-      {/* Heatmap (Login Activity) */}
-      <h2>Login Heatmap</h2>
-      <ScatterChart width={600} height={400}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis type="category" dataKey="date" name="Date" />
-        <YAxis type="number" dataKey="count" name="Login Count" />
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Scatter name="Login Activity" data={loginData} fill="#8884d8" />
-      </ScatterChart>
 
-      {/* Top 3 Users by Total Score */}
-      <h2>Top 3 Users by Total Score</h2>
+{/* Login activity heatmap */}
+<h2>Login Activity</h2>
+      <CalendarHeatmap
+  startDate={new Date('2023-03-01')}
+  endDate={new Date()}
+  values={loginData}
+  styleForValue={(value) => {
+    if (!value) {
+      return { fill: '#161b22' };  // Default color for no logins
+    }
+    return { fill: getColor(value.count) };  // Use getColor function to get the fill color based on login count
+  }}
+  tooltipDataAttrs={value => {
+    return {
+      'data-tip': value.date ? `${value.date}: ${value.count} logins` : 'No data',
+    };
+  }}
+/>
+
+      {/* Top 3 users bar chart */}
+      <h2 className='mt-4'>Top 3 Users by Total Score</h2>
       <BarChart width={600} height={400} data={topUsers}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="username" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="totalScore" fill="#8884d8">
+        <Bar dataKey="totalScore">
           {topUsers.map((user, index) => (
-            <Cell key={`cell-${index}`} fill={index === 0 ? '#82ca9d' : '#8884d8'} />
+            <Cell 
+              key={`cell-${index}`} 
+              fill={
+                index === 0 ? '#82ca9d' :  
+                index === 1 ? '#8884d8' :  
+                '#ffc658'                  
+              } 
+            />
           ))}
         </Bar>
       </BarChart>
-
-      <Outlet />
+      
+      {/* Placeholder for any nested routes */}
+      <Outlet className='mt-5'/>
     </div>
   );
 }

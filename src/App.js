@@ -17,6 +17,8 @@ import Status from './Components/Status/Status.js';
 import BSPS from './Components/BSPS/BSPS.js'
 import PostfixPS from './Components/PostfixPS/PostfixPS.js'
 import DSAQuiz from './DSAQuiz.js';
+import PlayDijkstra from './Components/PlayDijkstra/PlayDijkstra.js';
+import PlayBS from './Components/PlayBS/PlayBS.js'
 
 function App() {
   //create browser router object
@@ -66,11 +68,19 @@ function App() {
     },
     {
       path:"/binarygame",
-      element:<BinarySearchGame/>
+       element:<BinarySearchGame/>
+     },
+    {
+      path:"/playbs",
+      element:<PlayBS/>
+    },
+     {
+       path:"/cargame",
+       element:<Cargame/>
     },
     {
-      path:"/cargame",
-      element:<Cargame/>
+      path:"/playdj",
+      element:<PlayDijkstra/>
     },
     {
       path:"/dsaQuiz",
