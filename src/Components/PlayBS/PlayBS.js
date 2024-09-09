@@ -15,9 +15,9 @@ const PlayBS = () => {
          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
          referrerpolicy="strict-origin-when-cross-origin" 
          allowfullscreen='true'></iframe>
-   <Link to="/binarygame">
-          <button>Play Now!</button>
-        </Link>
+  <Link to="/demo-bs">
+        <button>See Demo</button>
+      </Link>
   </div>
   );
 };

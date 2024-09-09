@@ -27,8 +27,12 @@ const DemoInstructions = () => {
 
       <div className="demo-step">
         <h3>Step 4: Progress through Levels</h3>
-        <p>As you progress, maps become more complex. Apply Dijkstra's Algorithm to find the optimal path in increasingly challenging levels.There are total 3 levels</p>
-        <img src="images/complex-levels.png" alt="Complex Levels" className="demo-image" />
+        <p>As you progress, maps become more complex. Apply Dijkstra's Algorithm to find the optimal path in increasingly challenging levels. There are a total of 3 levels:</p>
+        <div className="level-images">
+          <img src="images/l1.png" alt="Level 1" className="level-image" />
+          <img src="images/l2.png" alt="Level 2" className="level-image" />
+          <img src="images/l3.png" alt="Level 3" className="level-image" />
+        </div>
       </div>
 
       <Link to="/cargame">

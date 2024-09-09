@@ -20,7 +20,7 @@ import DSAQuiz from './DSAQuiz.js';
 import PlayDijkstra from './Components/PlayDijkstra/PlayDijkstra.js';
 import PlayBS from './Components/PlayBS/PlayBS.js'
 import DemoDijkstra from './Components/DemoDijkstra/DemoDijkstra.js'
-
+import DemoBinarySearch from './Components/DemoBS/DemoBinarySearch.js'; 
 function App() {
   //create browser router object
   const router = createBrowserRouter([
@@ -75,6 +75,7 @@ function App() {
       path:"/playbs",
       element:<PlayBS/>
     },
+    { path: "/demo-bs", element: <DemoBinarySearch /> },
      {
        path:"/cargame",
        element:<Cargame/>

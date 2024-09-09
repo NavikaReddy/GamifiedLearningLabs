@@ -28,7 +28,20 @@
     font-size: 1.2rem;
     color: #aecfef;
   }
+  .level-images {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
   
+  .level-image {
+    width: 250px;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    margin: 0 10px;
+  }
   .demo-image {
     width: 100%;
     max-width: 600px;
