@@ -19,6 +19,7 @@ import PostfixPS from './Components/PostfixPS/PostfixPS.js'
 import DSAQuiz from './DSAQuiz.js';
 import PlayDijkstra from './Components/PlayDijkstra/PlayDijkstra.js';
 import PlayBS from './Components/PlayBS/PlayBS.js'
+import DemoDijkstra from './Components/DemoDijkstra/DemoDijkstra.js'
 
 function App() {
   //create browser router object
@@ -81,6 +82,10 @@ function App() {
     {
       path:"/playdj",
       element:<PlayDijkstra/>
+    },
+    {
+      path:"/Demodj",
+      element:<DemoDijkstra/>
     },
     {
       path:"/dsaQuiz",

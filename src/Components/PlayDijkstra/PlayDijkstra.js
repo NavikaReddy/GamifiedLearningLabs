@@ -8,16 +8,16 @@ const PlayDijkstra = () => {
       <h2>How Dijkstra Algorithm Works?</h2>
       <iframe width="560" 
       height="315" 
-      src="https://www.youtube.com/embed/wtdtkJgcYUM?si=2kYkJ8nFa7H2pYOr" 
+      src="https://www.youtube.com/watch?v=EFg3u_E6eHU"
       title="YouTube video player" 
       frameborder="0" 
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
       referrerpolicy="strict-origin-when-cross-origin" 
       allowfullscreen='true'>
       </iframe>
-      <Link to="/cargame">
-    <button>Play Now!</button>
-  </Link>
+      <Link to="/Demodj">
+        <button>Play Now!</button> {/* Redirect to DemoDijkstra page */}
+      </Link>
     </div>
   );
 };
