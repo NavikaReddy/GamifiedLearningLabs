@@ -67,7 +67,7 @@ const DijkstraPS = () => {
                 The minimal distances from city 1 to cities 0, 1, and 2 are 5, 0, and 2, respectively.
             </p>
             <Link to="/code?id=dij">
-                <button className='ms-3'>Code</button>
+                <button className='ms-3 demo-play-button'>Code</button>
             </Link>
         </div>
     );

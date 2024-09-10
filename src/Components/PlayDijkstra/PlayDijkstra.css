@@ -1,17 +1,28 @@
-.button-container {
-    margin-top: 20px;
+.demo-play-button {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.demo-play-button:hover {
+  background-color: #2ecc71;
+}
+  .demo-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
   }
   
-  .button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  .demo-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #f106aa;
   }
   
-  .button:hover {
-    background-color: #0056b3;
-  }

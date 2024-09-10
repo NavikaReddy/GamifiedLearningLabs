@@ -50,7 +50,7 @@ const BSPS = () => {
             </pre>
             <p>Explanation: The array contains the numbers 2, 4, 6, 8, 10, 12, and 14. The Bunny is searching for the number 5, which is not present in the array. Hence, the output is "Element not found".</p>
             <Link to="/code?id=bin">
-                <button className='ms-3'>Code</button>
+                <button className='ms-3 demo-play-button'>Code</button>
             </Link>
         </div>
     );
