@@ -103,12 +103,10 @@ function App() {
     {
       path:"/main",
       element:<Main/>,
-      children:[
-        {
-          path:"leaderboard",
-          element:<LeaderBoard/>
-        }
-      ]
+    },
+    {
+    path:"/leaderboard",
+    element:<LeaderBoard/>
     }
     ]
     }

@@ -68,7 +68,7 @@ function Main() {
   };
 
   // Calculate total score from user data
-  const totalScore = userData ? 
+  let totalScore = userData ? 
     parseInt(userData.dijkstraScore) +
     parseInt(userData.dsaTestScore) +
     parseInt(userData.binarySearchScore) +
@@ -143,7 +143,7 @@ function Main() {
               <Link className="nav-link" to="/">SignOut</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="leaderboard">LeaderBoard</Link>
+              <Link className="nav-link" to="/leaderboard">LeaderBoard</Link>
             </li>
           </ul>
 
@@ -215,8 +215,6 @@ function Main() {
               ))}
             </Bar>
           </BarChart>
-
-          <Outlet className='mt-5'/>
         </div>
       )}
     </div>
