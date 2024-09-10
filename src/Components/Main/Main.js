@@ -10,15 +10,27 @@ function Main() {
   const [userData, setUserData] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [topUsers, setTopUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
   // Fetch user data from location state
   useEffect(() => {
-    if (location.state && location.state.userData) {
-      setUserData(location.state.userData);
-    }
+    const fetchData = async () => {
+      if (location.state && location.state.userData) {
+        console.log("User data received:", location.state.userData); // Debugging log
+        setUserData(location.state.userData);
+      }
+      setLoading(false);  // <-- Set loading to false after data is fetched
+    };
+
+    const delayTimeout = setTimeout(() => {
+      fetchData();
+    }, 3000); // <-- Adjust the delay here (3000ms = 3 seconds)
+
+    return () => clearTimeout(delayTimeout);  // Clean up the timeout
   }, [location.state]);
+
 
   // Fetch top users for the leaderboard
   useEffect(() => {
@@ -103,23 +115,43 @@ function Main() {
 
   return (
     <div>
-      {/* Navigation bar */}
-      <ul className="nav justify-content-center">
-        <li className="nav-item">
-          <Link className="nav-link" to="/">SignOut</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="leaderboard">LeaderBoard</Link>
-        </li>
-      </ul>
-
-      {/* User details */}
-      {location.pathname !== '/main/leaderboard' && (
+      {loading ? (
+        // Show preloader if loading
+        <div id="preloader">
+          <div id="ctn-preloader" className="ctn-preloader">
+            <div className="animation-preloader">
+              <div className="spinner"></div>
+              <div className="txt-loading">
+                <span data-text-preloader="G" className="letters-loading"> G </span>
+                <span data-text-preloader="A" className="letters-loading"> A </span>
+                <span data-text-preloader="M" className="letters-loading"> M </span>
+                <span data-text-preloader="E" className="letters-loading"> E </span>
+                <span data-text-preloader="1" className="letters-loading"> 1 </span>
+                <span data-text-preloader="0" className="letters-loading"> 0 </span>
+                <span data-text-preloader="1" className="letters-loading"> 1 </span>
+              </div>
+            </div>
+            <div className="loader-section section-left"></div>
+            <div className="loader-section section-right"></div>
+          </div>
+        </div>
+      ) : (
+        // Main content after loading
         <div>
+          <ul className="nav justify-content-center">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">SignOut</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="leaderboard">LeaderBoard</Link>
+            </li>
+          </ul>
+
           <div className="user-details">
             <h2>Welcome {userData ? userData.username : 'User'}!</h2>
             <p>Scores: {userData ? totalScore : '-'}</p>
           </div>
+
           <div className="search-bar">
             <h3>Search Courses</h3>
             <select value={selectedCourse} onChange={handleCourseChange}>
@@ -128,100 +160,65 @@ function Main() {
               <option value="Tests">Tests</option>
             </select>
           </div>
+
+          <div className="chart-container">
+            <div className="chart-item">
+              <h2>Percentage of Marks by Section</h2>
+              <PieChart width={300} height={300}>
+                <Pie data={scoresBySection} dataKey="value" nameKey="name" outerRadius={120} label>
+                  {scoresBySection.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={index === 0 ? '#82ca9d' : index === 1 ? '#8884d8' : '#ffc658'} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend verticalAlign="top" align="right" />
+              </PieChart>
+            </div>
+            <div className="chart-item">
+              <h2>Percentage of Marks by Algorithm</h2>
+              <PieChart width={300} height={300}>
+                <Pie data={scoresByAlgorithm} dataKey="value" nameKey="name" innerRadius={80} outerRadius={120} label>
+                  {scoresByAlgorithm.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={index === 0 ? '#82ca9d' : index === 1 ? '#8884d8' : '#ffc658'} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend verticalAlign="top" align="right" />
+              </PieChart>
+            </div>
+          </div>
+
+          <h2>Login Activity</h2>
+          <CalendarHeatmap
+            startDate={new Date('2023-03-01')}
+            endDate={new Date()}
+            values={loginData}
+            styleForValue={(value) => {
+              if (!value) return { fill: '#161b22' };
+              return { fill: getColor(value.count) };
+            }}
+            tooltipDataAttrs={(value) => ({
+              'data-tip': value.date ? `${value.date}: ${value.count} logins` : 'No data',
+            })}
+          />
+          
+          <h2 className='mt-4'>Top 3 Users by Total Score</h2>
+          <BarChart width={600} height={400} data={topUsers}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="username" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="totalScore">
+              {topUsers.map((user, index) => (
+                <Cell key={`cell-${index}`} fill={index === 0 ? '#82ca9d' : index === 1 ? '#8884d8' : '#ffc658'} />
+              ))}
+            </Bar>
+          </BarChart>
+
+          <Outlet className='mt-5'/>
         </div>
       )}
-
-      {/* Pie charts for scores by section and algorithm */}
-      <div className="chart-container">
-        <div className="chart-item">
-          <h2>Percentage of Marks by Section</h2>
-          <PieChart width={300} height={300}>
-            <Pie
-              data={scoresBySection}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={120}
-              label
-            >
-              {scoresBySection.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={
-                  index === 0 ? '#82ca9d' : 
-                  index === 1 ? '#8884d8' : 
-                  '#ffc658'} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend verticalAlign="top" align="right" />
-          </PieChart>
-        </div>
-
-        <div className="chart-item">
-          <h2>Percentage of Marks by Algorithm</h2>
-          <PieChart width={300} height={300}>
-            <Pie
-              data={scoresByAlgorithm}
-              dataKey="value"
-              nameKey="name"
-              innerRadius={80}
-              outerRadius={120}
-              label
-            >
-              {scoresByAlgorithm.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={
-                  index === 0 ? '#82ca9d' : 
-                  index === 1 ? '#8884d8' : 
-                  '#ffc658'} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend verticalAlign="top" align="right" />
-          </PieChart>
-        </div>
-      </div>
-
-{/* Login activity heatmap */}
-<h2>Login Activity</h2>
-      <CalendarHeatmap
-  startDate={new Date('2023-03-01')}
-  endDate={new Date()}
-  values={loginData}
-  styleForValue={(value) => {
-    if (!value) {
-      return { fill: '#161b22' };  // Default color for no logins
-    }
-    return { fill: getColor(value.count) };  // Use getColor function to get the fill color based on login count
-  }}
-  tooltipDataAttrs={value => {
-    return {
-      'data-tip': value.date ? `${value.date}: ${value.count} logins` : 'No data',
-    };
-  }}
-/>
-
-      {/* Top 3 users bar chart */}
-      <h2 className='mt-4'>Top 3 Users by Total Score</h2>
-      <BarChart width={600} height={400} data={topUsers}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="username" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="totalScore">
-          {topUsers.map((user, index) => (
-            <Cell 
-              key={`cell-${index}`} 
-              fill={
-                index === 0 ? '#82ca9d' :  
-                index === 1 ? '#8884d8' :  
-                '#ffc658'                  
-              } 
-            />
-          ))}
-        </Bar>
-      </BarChart>
-      
-      {/* Placeholder for any nested routes */}
-      <Outlet className='mt-5'/>
     </div>
   );
 }
