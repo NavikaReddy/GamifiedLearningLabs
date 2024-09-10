@@ -279,11 +279,6 @@ function CodeCompiler() {
                     ) : (
                         <div className="output-box">
                             <pre>{userOutput}</pre>
-                           
-                            <button onClick={() => { clearOutput() }} className="clear-btn">
-                                Clear
-                            </button>
-                           
                         </div>
                     )}
                 </div>

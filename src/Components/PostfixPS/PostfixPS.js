@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import './PostfixPS.css';
 const PostfixPS = () => {
   return (
-    <div className="postfix-evaluator">
+    <div className="problem-statement-container">
       <h1>Postfix Expression Evaluator</h1>
       <p>In this problem, you are given a postfix expression, also known as Reverse Polish Notation (RPN). Your task is to evaluate the expression and return the result. A postfix expression is a mathematical notation in which every operator follows all of its operands. It does not need any parentheses as long as the operators have a fixed number of operands.</p>
       

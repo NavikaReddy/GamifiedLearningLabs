@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './DijkstraPS.css'
 
 const DijkstraPS = () => {
     return (
-        <div>
+        <div className="problem-statement-container">
             <h1>Optimal Route Finder: The Minimal Cost Path</h1>
             <p>
                 <strong>Problem Explanation:</strong><br />
