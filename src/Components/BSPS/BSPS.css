@@ -1,35 +1,50 @@
 .problem-statement-container {
     padding: 20px;
-    max-width: 800px;
+    max-width: 800px; /* Set a width to make the content more readable */
+    margin: 0 auto; /* Center the container */
     font-family: Arial, sans-serif;
+    text-align: left; /* Align all text to the left */
 }
 
 .problem-statement-container h1 {
-    font-size: 2em;
+    font-size: 2.5em; /* Slightly larger for more impact */
     margin-bottom: 20px;
+    text-align: left; /* Ensure the title is left-aligned */
 }
 
 .problem-statement-container h2 {
-    font-size: 1.5em;
-    margin-top: 20px;
+    font-size: 1.8em;
+    margin-top: 25px;
+    color: #f107aa; /* A subtle dark color for headers */
+    text-align: left;
 }
 
 .problem-statement-container p,
 .problem-statement-container ul,
 .problem-statement-container pre {
     margin-bottom: 20px;
+    line-height: 1.6; /* Improved readability */
+    color: #ffffff; /* A softer text color */
+}
+
+.problem-statement-container ul {
+    list-style-type: disc;
+    padding-left: 40px; /* Add padding for indentation */
 }
 
 .problem-statement-container pre {
-    background-color: #f4f4f4;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: #4a4a57; /* A light background for the code block */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd; /* A light border to distinguish the code block */
+    overflow-x: auto; /* Add horizontal scrolling for long code snippets */
+    font-family: 'Courier New', Courier, monospace; /* A monospaced font for code */
 }
 
 .demo-play-button {
     display: block;
-    width: 200px;
-    margin: 20px auto;
+    width: 150px; /* Adjusted button size */
+    margin: 20px 0; /* More space around the button */
     padding: 10px;
     font-size: 16px;
     background-color: #007bff;
@@ -37,9 +52,10 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .demo-play-button:hover {
+    text-align: center;
+}
+
+.demo-play-button:hover {
     background-color: #0056b3;
-  }
-  
+}
+
