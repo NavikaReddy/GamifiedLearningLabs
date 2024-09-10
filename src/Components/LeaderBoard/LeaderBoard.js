@@ -26,7 +26,7 @@ function LeaderBoard() {
 
   useEffect(() => {
     getUsers();
-  });
+  },[]);
 
   return (
     <div>
@@ -53,7 +53,7 @@ function LeaderBoard() {
               <tr key={userObj.id}>
                 <td>{userObj.username}</td>
                 <td>{userObj.email}</td>
-                <td>{parseInt(userObj.dijkstraScore) + parseInt(userObj.dsaTestScore)+parseInt(userObj.binarySearchScore)}</td>
+                <td>{parseInt(userObj.dijkstraScore) + parseInt(userObj.dsaTestScore)+parseInt(userObj.binarySearchScore)+parseInt(userObj.dijkstraCode)+parseInt(userObj.binarySearchCode)+parseInt(userObj.postfixCode)+parseInt(userObj.dsaQuizScore)}</td>
                 <td>{userObj.dijkstraScore}</td>
                 <td>{userObj.binarySearchScore}</td>
                 <td>{userObj.dijkstraCode}</td>

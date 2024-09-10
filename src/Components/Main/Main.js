@@ -12,33 +12,40 @@ function Main() {
   const [topUsers, setTopUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const location = useLocation();
 
-  // Fetch user data from location state
+  // Fetch user data from the API based on the _id stored in localStorage
   useEffect(() => {
-    const fetchData = async () => {
-      if (location.state && location.state.userData) {
-        console.log("User data received:", location.state.userData); // Debugging log
-        setUserData(location.state.userData);
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        // If no userId is found in localStorage, redirect to the login page
+        navigate('/signin');
+        return;
       }
-      setLoading(false);  // <-- Set loading to false after data is fetched
+
+      try {
+        const response = await axios.get(`http://localhost:3500/user-api/user/${userId}`);
+        if (response.status === 200) {
+          setUserData(response.data);
+        } else {
+          console.error("Error fetching user data:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+
+      setLoading(false);
     };
 
-    const delayTimeout = setTimeout(() => {
-      fetchData();
-    }, 3000); // <-- Adjust the delay here (3000ms = 3 seconds)
-
-    return () => clearTimeout(delayTimeout);  // Clean up the timeout
-  }, [location.state]);
-
+    fetchUserData();
+  }, []);
 
   // Fetch top users for the leaderboard
   useEffect(() => {
     const fetchTopUsers = async () => {
       try {
         const response = await axios.get('http://localhost:3500/user-api/get-users');
-        const users = response.data;
-        setTopUsers(users.slice(0, 3)); // Limit to top 3 users
+        setTopUsers(response.data.slice(0, 3)); // Limit to top 3 users
       } catch (error) {
         console.error("Error fetching top users:", error);
       }
@@ -46,6 +53,7 @@ function Main() {
 
     fetchTopUsers();
   }, []);
+  console.log("User data from main",userData);
 
   // Handle course selection change
   const handleCourseChange = (event) => {

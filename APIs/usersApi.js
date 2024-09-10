@@ -1,6 +1,7 @@
 const exp = require("express");
 const userApp = exp.Router();
 const bcryptjs = require('bcryptjs');
+const {ObjectId} = require('mongodb')
 const expressAsyncHandler = require('express-async-handler');
 const session = require('express-session');
 userApp.use(session({
@@ -118,7 +119,7 @@ userApp.get("/user/:userId", async (request, response) => {
 
   try {
     // Find the user by ID
-    const user = await usersCollection.findOne({ _id: ObjectId(userId) });
+    const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
 
     if (!user) {
       response.status(404).send({ message: "User not found" });
@@ -126,7 +127,7 @@ userApp.get("/user/:userId", async (request, response) => {
     }
 
     // Respond with the user's username
-    response.status(200).send({ username: user.username });
+    response.status(200).send(user);
   } catch (err) {
     console.error("Error fetching user data:", err);
     response.status(500).send({ message: "Internal server error" });
