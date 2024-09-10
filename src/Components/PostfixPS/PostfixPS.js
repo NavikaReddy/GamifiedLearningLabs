@@ -34,7 +34,7 @@ const PostfixPS = () => {
         <p>Explanation 2: The expression "92-3*" evaluates to (9 - 2) * 3 = 7 * 3 = 21.</p>
       </div>
       <Link to="/code?id=pos">
-                <button className='ms-3'>Code</button>
+                <button className='ms-3 demo-play-button'>Code</button>
             </Link>
       </div>
       )
