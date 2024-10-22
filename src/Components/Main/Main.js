@@ -12,6 +12,8 @@ function Main() {
   const [topUsers, setTopUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  
+  const delayTime = 3000; 
 
   // Fetch user data from the API based on the _id stored in localStorage
   useEffect(() => {
@@ -34,7 +36,9 @@ function Main() {
         console.error("Error fetching user data:", error);
       }
 
-      setLoading(false);
+     setTimeout(() => {
+        setLoading(false);
+      }, delayTime);
     };
 
     fetchUserData();
